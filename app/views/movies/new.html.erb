@@ -1,0 +1,85 @@
+<div id="content">
+  <div class="table_header">
+    <div class="table_header_text">Создание нового фильма</div>
+    </div>
+    <div class="table_content">
+    </div>
+    <%= form_for @movie, :action => 'new' do |f| %>
+    <div class="table_control_panel">
+      <div class="OTC CUC LTC">
+        <%= f.submit "Сохранить", :class => "but" %><div class="ITC"></div>
+      </div>
+    </div>
+    <div class="table_content_in">
+      <div class="item">
+        <div class="header">
+          <h3><span>Информация о фильме</span></h3>
+        </div>
+
+        <table width="100%" border="0" class="table_content_in">
+          <tr>
+            <td>Номер диска</td>
+            <td><%= f.text_field :disknum%></td>
+          </tr>
+
+          <tr class="alt">
+            <td>Название</td>
+            <td><%= f.text_field :name %></td>
+          </tr>
+          <tr>
+            <td>Название в оригинале</td>
+            <td><%= f.text_field :orig_name %></td>
+          </tr>
+          <tr class="alt">
+            <td>Год выпуска</td>
+            <td><%= f.text_field :year %></td>
+          </tr>
+          <tr>
+            <td>Жанр</td>
+            <td><%= f.text_field :genre %></td>
+          </tr>
+          <tr class="alt">
+            <td>Режиссёр</td>
+            <td><%= f.text_field :director %></td>
+          </tr>
+          <tr>
+            <td>Продюссер</td>
+            <td><%= f.text_field :produced %></td>
+          </tr>
+          <tr class="alt">
+            <td>Звёзды</td>
+            <td><%= f.text_field :stars %></td>
+          </tr>
+          <tr>
+            <td>Актёры</td>
+            <td><%= f.text_area :actors %></td>
+          </tr>
+          <tr class="alt">
+            <td>Композитор</td>
+            <td><%= f.text_field :composer %></td>
+          </tr>
+          <tr>
+            <td>Рейтинг IMDB</td>
+            <td><%= f.text_field :imdb %></td>
+          </tr>
+          <tr class="alt">
+            <td>Примечания</td>
+            <td><%= f.text_field :remarks %></td>
+          </tr>
+          <tr>
+            <td>Описание</td>
+            <td><%= f.text_area :desc %></td>
+          </tr>
+          <tr class="alt">
+            <td>Ссылка на IMDB</td>
+            <td><%= f.text_field :imdb_link %><%= f.button "Получить инфу", :class => "but" %></td>
+          </tr>
+          <tr>
+            <td>Ссылка на Кинопоиск</td>
+            <td><%= f.text_field :kinopoisk_link %></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <% end %>
+</div>

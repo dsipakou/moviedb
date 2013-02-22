@@ -1,0 +1,72 @@
+<div style="padding-top: 5px; padding-bottom: 5px;">
+</div>
+<div>
+  <div>
+    <% @movies.each do |movie| %>
+    <div class="item">
+      <table border="0">
+        <tbody>
+          <tr align="left" rowspan="3" class="altitem">
+            <td rowspan="3" runat="" onmousedown="image_over(this,'desc47816');" onmouseout="image_out('desc47816');">
+              <img id="MainContentPlaceHolder_ucListRepeater_MoviesRepeater_Image1_0" src="../../Images/Posters/MV5BMjIwNTM4Njg2NF5BMl5BanBnXkFtZTcwNDQwMTAwNA@@._V1._SY317_.jpg_small.jpg" style="height:120px;width:82px;">
+            </td>
+            <td width="30%">
+              <strong><a href="../movies/<%= movie.id %>" class="name"><%= movie.name%></a> (2011)</strong>
+            </td>
+            <td width="52%" rowspan="3">
+              <table width="100%">
+                <tbody>
+                  <tr>
+                    <td class="titles">Режиссёр</td>
+                    <td><a href="?director=Patrick Lussier" class="actors"><%= movie.director %></a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="titles">Актёры</td>
+                    <td><%= movie.stars %></td>
+                  </tr>
+                  <tr>
+                    <td class="titles">Продюссер</td>
+                    <td><%= movie.produced %></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+            <td width="10%" valign="center" rowspan="3">
+              <table>
+                <tbody>
+                  <tr>
+                    <td><img src="../../Icons/dvd-icon.png"></td>
+                    <td><a href="?disk=<%= movie.disknum %>" class="actors"><%= movie.disknum %></a></td>
+                  </tr>
+                  <tr>
+                    <td><img id="MainContentPlaceHolder_ucListRepeater_MoviesRepeater_Image2_0" src="../../Icons/imdb.png" style="border-style:None;"></td>
+                    <td><a href="<%= movie.imdb_link %>" class="actors"><%= movie.imdb %></a></td>
+                  </tr>
+                  <tr>
+                    <td><img src="../../Icons/speach.jpg"></td>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          </tr>
+          <tr align="left" class="altitem">
+            <td><%= movie.orig_name %></td>
+          </tr>
+          <tr align="left" class="altitem">
+            <td class="genres"><%= movie.genre %></td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <div class="popup" id="desc47816">
+                <%= movie.desc %>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <% end %>
+  </div>
+</div>

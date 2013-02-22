@@ -1,0 +1,9 @@
+<table>
+  <tbody>
+    <% genre.each do |g| %>
+    <tr>
+      <td><%= check_box_tag 'genre', g.id%><%= g.eng %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>

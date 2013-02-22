@@ -1,0 +1,41 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  disknum: MyString
+  name: MyString
+  orig_name: MyString
+  year: MyString
+  genre: MyString
+  director: MyString
+  produced: MyString
+  stars: MyString
+  actors: MyString
+  composer: MyString
+  lang: MyString
+  imdb: MyString
+  remarks: MyString
+  desc: MyString
+  imdb_link: MyString
+  image_link: MyString
+  imdbhtml1: MyString
+  imdbhtml2: MyString
+
+two:
+  disknum: MyString
+  name: MyString
+  orig_name: MyString
+  year: MyString
+  genre: MyString
+  director: MyString
+  produced: MyString
+  stars: MyString
+  actors: MyString
+  composer: MyString
+  lang: MyString
+  imdb: MyString
+  remarks: MyString
+  desc: MyString
+  imdb_link: MyString
+  image_link: MyString
+  imdbhtml1: MyString
+  imdbhtml2: MyString

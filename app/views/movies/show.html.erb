@@ -1,0 +1,78 @@
+<div id="content">
+  <div class="table_header">
+  </div>
+  <div class="table_content">
+    <div align="right" style="float:right;">
+      <input name="ctl00$ContentHeaderPlaceHolder$tbSearch" type="text" id="ContentHeaderPlaceHolder_tbSearch" class="textbox"></input>
+      <a id="ContentHeaderPlaceHolder_lbSearch" class="button" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbSearch','')">Искать</a>
+    </div>
+    <br />
+  </div>
+  <div class="table_control_panel">
+    <div class="OTC CUC LTC"><a id="ControlContentPlaceHolder_lbEdit" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbEdit','')">Редактировать</a><div class="ITC"></div></div>
+    <div class="OTC CUC LTC"><a id="ControlContentPlaceHolder_lbDelete" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbDelete','')">Удалить</a><div class="ITC"></div></div>
+    <div class="OTC CUC LTC"><a id="ControlContentPlaceHolder_lbExport" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbExport','')">Экспорт в Excel</a><div class="ITC"></div></div>
+    <div class="OTC CUC LTC"><a id="ControlContentPlaceHolder_lbGoogleExport" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbGoogleExport','')">Экспорт в Google Docs</a><div class="ITC"></div></div>
+  </div>
+  <div class="table_content_in">
+    <div class="title">
+      <div><span id="name" class="DDMainHeader"><%= @movie.name %> (<%= @movie.year %>)</span></div>
+      <br />
+      <div><span id="orig_name" class="DDSubHeader"><%= @movie.orig_name %></span></div>
+      <br />
+      <div>
+        <span class="DDSubHeader" style="font-size:12pt;font-weight:bold;">Номер диска</span>
+        <a id="disknum" class="actors" href="../list/?disk=M10174"><%= @movie.disknum %></a>
+      </div>
+    </div>
+    <br />
+    <div id="MainContentPlaceHolder_tContainer" class="ajax__tab_technorati-theme ajax__tab_container ajax__tab_default" style="visibility: visible;">
+      <div id="MainContentPlaceHolder_tContainer_body" class="ajax__tab_body">
+	<div id="MainContentPlaceHolder_tContainer_TabPanel1" class="ajax__tab_panel" style="visibility: visible;">
+          <div>
+            <table cellspacing="7">
+              <tbody>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDirector" class="DD" style="font-weight:bold;">Режиссёр</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDirectorValue" class="DD"><%= @movie.director %></span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lProduced" class="DD" style="font-weight:bold;">Продюссер</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lProducedValue" class="DD"><%= @movie.produced %></span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lActors" class="DD" style="font-weight:bold;">Актёры</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lActorsValue" class="DD"><%= @movie.actors %></span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lComposer" class="DD" style="font-weight:bold;">Композитор</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lComposerValue" class="DD"><%= @movie.composer %></span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lGenre" class="DD" style="font-weight:bold;">Жанр</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lGenreValue" class="DD"><%= @movie.genre%> </span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lImdb" class="DD" style="font-weight:bold;">IMDB</span></td>
+                  <td><a id="MainContentPlaceHolder_tContainer_TabPanel1_hlImdbValue" class="actors" href="<%= @movie.imdb_link %>"><%= @movie.imdb %></a></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDesc" class="DD" style="font-weight:bold;">Описание</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDescValue" class="DD"><%= @movie.desc %></span></td>
+                </tr>
+                <tr>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lRemark" class="DD" style="font-weight:bold;">Примечания</span></td>
+                  <td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lRemarkValue" class="DD"><%= @movie.remarks %></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+

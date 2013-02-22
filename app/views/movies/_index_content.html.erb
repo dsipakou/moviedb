@@ -1,0 +1,53 @@
+<!-- header -->
+<div class="table_header">
+    <div class="table_header_text">
+        <span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
+        <span id="TableHeaderContentPlaceHolder_lCount">1 - 5</span>
+        <span id="TableHeaderContentPlaceHolder_Label1">из</span>
+        <span id="TableHeaderContentPlaceHolder_lCountAll">12</span>
+    </div>
+</div>
+
+<!-- -->
+<div class="table_content">
+  <div align="right" style="right: 0px; float: right;">
+      <input name="ctl00$ContentHeaderPlaceHolder$tbSearch" type="text" id="ContentHeaderPlaceHolder_tbSearch" class="textbox" />
+      <a id="ContentHeaderPlaceHolder_lbSearch" class="button" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbSearch','')">Искать</a>
+  </div>
+  <div style="float: right; margin-right: 100px;">
+      <div id="ContentHeaderPlaceHolder_pSorting" align="Center">
+          <a id="ContentHeaderPlaceHolder_lbNameSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbNameSort','')">Название</a>
+          <a id="ContentHeaderPlaceHolder_lbYearSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbYearSort','')">Год выпуска</a>
+          <a id="ContentHeaderPlaceHolder_lbIMDBSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbIMDBSort','')">Рейтинг IMDB</a>
+      </div>
+  </div>
+  <div align="center" style="float: left;" class="filtered">
+
+  </div>
+  <br />
+</div>
+
+<!-- -->
+<div class="table_control_panel">
+    <div class="OTC CUC LTC">
+        <a class="PTC AUC" href="./new">Новый фильм</a><div class="ITC">
+        </div>
+    </div>
+    <div class="OTC CUC LTC">
+        <a id="ControlContentPlaceHolder_lbExportToExcel" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbExportToExcel','')">Экспортировать в Excel</a><div class="ITC">
+        </div>
+    </div>
+    <div class="OTC CUC LTC">
+        <a id="ControlContentPlaceHolder_lbImportFromExcel" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbImportFromExcel','')">Импорт из Excel</a><div class="ITC">
+        </div>
+    </div>
+</div>
+
+<!-- -->
+<div class="table_content_in">
+  <%= render :partial => "index_inner"  %>
+</div>
+
+<!-- -->
+<div class="table_bottom">
+</div>

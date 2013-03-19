@@ -1,26 +1,27 @@
+
 <% form_for (details) do |f| %>
-<table width="100%" border="0">
-  <tbody>
-    <tr>
-        <td>Продолжительность</td>
-        <td colspan="2"><%= f.text_field :duration %></td>
-    </tr>
-    <tr>
-        <td width="20%">Размер файла</td>
-        <td width="80%"><%= f.text_field :file_size %></td>
-    </tr>
-    <tr>
-        <td>Размер картинки</td>
-        <td><%= f.text_field :resolution %></td>
-    </tr>
-    <tr>
-        <td>Тип файла</td>
-        <td><%= f.text_field :filetype %></td>
-    </tr>
-    <tr>
-        <td>Скриншот №1</td>
-        <td><%= f.text_field :screenshot %></td>
-    </tr>
-  </tbody>
-</table>
+	<table width="100%" border="0">
+		<tbody>
+			<tr>
+				<td>Продолжительность</td>
+				<td colspan="2"><%= f.text_field :duration %></td>
+			</tr>
+			<tr>
+				<td width="20%">Размер файла</td>
+				<td width="80%"><%= f.text_field :file_size %></td>
+			</tr>
+			<tr>
+				<td>Размер картинки</td>
+				<td><%= f.text_field :resolution %></td>
+			</tr>
+			<tr>
+				<td>Тип файла</td>
+				<td><%= f.text_field :filetype %></td>
+			</tr>
+			<tr>
+				<td>Скриншот №1</td>
+				<td><%= f.text_field :screenshot %></td>
+			</tr>
+		</tbody>
+	</table>
 <% end %>

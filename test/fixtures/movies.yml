@@ -4,7 +4,7 @@ one:
   disknum: MyString
   name: MyString
   orig_name: MyString
-  year: MyString
+  year: 1
   genre: MyString
   director: MyString
   produced: MyString
@@ -13,18 +13,18 @@ one:
   composer: MyString
   lang: MyString
   imdb: MyString
+  imdb: MyString
   remarks: MyString
   desc: MyString
   imdb_link: MyString
+  kinopoisk_link: MyString
   image_link: MyString
-  imdbhtml1: MyString
-  imdbhtml2: MyString
 
 two:
   disknum: MyString
   name: MyString
   orig_name: MyString
-  year: MyString
+  year: 1
   genre: MyString
   director: MyString
   produced: MyString
@@ -33,9 +33,9 @@ two:
   composer: MyString
   lang: MyString
   imdb: MyString
+  imdb: MyString
   remarks: MyString
   desc: MyString
   imdb_link: MyString
+  kinopoisk_link: MyString
   image_link: MyString
-  imdbhtml1: MyString
-  imdbhtml2: MyString

@@ -1,72 +1,71 @@
 <div style="padding-top: 5px; padding-bottom: 5px;">
 </div>
 <div>
-  <div>
-    <% @movies.each do |movie| %>
-    <div class="item">
-      <table border="0">
-        <tbody>
-          <tr align="left" rowspan="3" class="altitem">
-            <td rowspan="3" runat="" onmousedown="image_over(this,'desc47816');" onmouseout="image_out('desc47816');">
-              <img id="MainContentPlaceHolder_ucListRepeater_MoviesRepeater_Image1_0" src="../../Images/Posters/MV5BMjIwNTM4Njg2NF5BMl5BanBnXkFtZTcwNDQwMTAwNA@@._V1._SY317_.jpg_small.jpg" style="height:120px;width:82px;">
-            </td>
-            <td width="30%">
-              <strong><a href="../movies/<%= movie.id %>" class="name"><%= movie.name%></a> (2011)</strong>
-            </td>
-            <td width="52%" rowspan="3">
-              <table width="100%">
-                <tbody>
-                  <tr>
-                    <td class="titles">Режиссёр</td>
-                    <td><a href="?director=Patrick Lussier" class="actors"><%= movie.director %></a>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="titles">Актёры</td>
-                    <td><%= movie.stars %></td>
-                  </tr>
-                  <tr>
-                    <td class="titles">Продюссер</td>
-                    <td><%= movie.produced %></td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-            <td width="10%" valign="center" rowspan="3">
-              <table>
-                <tbody>
-                  <tr>
-                    <td><img src="../../Icons/dvd-icon.png"></td>
-                    <td><a href="?disk=<%= movie.disknum %>" class="actors"><%= movie.disknum %></a></td>
-                  </tr>
-                  <tr>
-                    <td><img id="MainContentPlaceHolder_ucListRepeater_MoviesRepeater_Image2_0" src="../../Icons/imdb.png" style="border-style:None;"></td>
-                    <td><a href="<%= movie.imdb_link %>" class="actors"><%= movie.imdb %></a></td>
-                  </tr>
-                  <tr>
-                    <td><img src="../../Icons/speach.jpg"></td>
-                    <td></td>
-                  </tr>
-                </tbody>
-              </table>
-            </td>
-          </tr>
-          <tr align="left" class="altitem">
-            <td><%= movie.orig_name %></td>
-          </tr>
-          <tr align="left" class="altitem">
-            <td class="genres"><%= movie.genre %></td>
-          </tr>
-          <tr>
-            <td colspan="4">
-              <div class="popup" id="desc47816">
-                <%= movie.desc %>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <% end %>
-  </div>
+	<div>
+		<% @movies.each do |movie| %>
+		<div class="item">
+			<table border="0">
+				<tbody>
+					<tr align="left" rowspan="3" class="altitem">
+						<td rowspan="3">
+							<%= image_tag (movie.image_link), :size => "82x120"%>
+						</td>
+						<td width="30%">
+							<strong><%= link_to movie.name, movie, class: "name" %></strong>
+						</td>
+						<td width="52%" rowspan="3">
+							<table width="100%">
+								<tbody>
+									<tr>
+										<td class="titles">Режиссёр</td>
+										<td><% movie.director.split(",").each do |director| %><%= link_to director.strip, movies_path(director: director.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+									</tr>
+									<tr>
+										<td class="titles">Актёры</td>
+										<td><% movie.stars.split(",").each do |star| %><%= link_to star.strip, movies_path(actor: star.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+									</tr>
+									<tr>
+										<td class="titles">Продюссер</td>
+										<td><%= movie.produced %></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+						<td width="10%" valign="center" rowspan="3">
+							<table>
+								<tbody>
+									<tr>
+										<td><img src="../../Icons/dvd-icon.png"></td>
+										<td><% movie.disknum.split(",").each do |disk| %><%= link_to disk.strip, movies_path(disknum: disk.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+									</tr>
+									<tr>
+										<td><img src="../../Icons/imdb.png" style="border-style:None;"></td>
+										<td><%= link_to "#{movie.imdb / 10}.#{movie.imdb % 10}", movie.imdb_link, class: "name" %></td>
+									</tr>
+									<tr>
+										<td><img src="../../Icons/speach.jpg"></td>
+										<td></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+					<tr align="left" class="altitem">
+						<td><%= movie.orig_name %> (<%= movie.year if movie.year > 0 %>)</td>
+					</tr>
+					<tr align="left" class="altitem">
+						<td class="genres"><%= movie.genre %></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+							<div class="popup">
+								<%= movie.desc %>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<% end %>
+	</div>
 </div>

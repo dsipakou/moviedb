@@ -1,0 +1,130 @@
+<%= form_for @movie do |f| %>
+	<div class="table_content" style="font-size: 12px;">
+		<% if @movie.errors.any? %>
+			<div>
+				<%= "Ошибок — #{@movie.errors.count}." %> Надо фиксать, ребятки:
+				<ul>
+					<% @movie.errors.full_messages.each do |msg| %>
+						<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+	</div>
+	<div class="table_control_panel">
+		<div class="OTC CUC LTC"><%= f.submit "Сохранить", :class => "but_menu", :disable_with => "Жди!", :name => "movie_save" %><div class="ITC"></div></div>
+		<div class="OTC CUC LTC"><%= link_to "Отмена", movies_path, class: "PTC AUC" %><div class="ITC"></div></div>
+	</div>
+	<div class="table_content_in">
+		<div class="item photo">
+			<div class="header">
+				<h3><span>Постер</span></h3>
+			</div>
+			<%= f.hidden_field :image_link %>
+			<%= image_tag (@movie.image_link) if @movie.image_link && !@movie.image_link.empty? %>
+			<%= f.button "Загрузить постер", :disable_with => 'Жди!', :class => "button", :name => "imdb_upload" %>
+		</div>
+		<div class="item item_new">
+			<div class="header">
+				<h3><span>Информация о фильме</span></h3>
+			</div>
+			<table width="100%" border="0" class="table_content_in">
+				<tr>
+					<td>Номер диска</td>
+					<td><%= f.text_field :disknum %></td>
+				</tr>
+				<tr class="alt">
+					<td>Название</td>
+					<td><%= f.text_field :name %></td>
+				</tr>
+				<tr>
+					<td>Название в оригинале</td>
+					<td><%= f.text_field :orig_name %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_orig_name" %></td>
+				</tr>
+				<tr class="alt">
+					<td>Год выпуска</td>
+					<td><%= f.text_field :year %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_year" %></td>
+				</tr>
+				<tr>
+					<td>Жанр</td>
+					<td><%= f.text_field :genre %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_genre" %></td>
+				</tr>
+				<tr class="alt">
+					<td>Режиссёр</td>
+					<td><%= f.text_field :director %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_director" %></td>
+				</tr>
+				<tr>
+					<td>Продюссер</td>
+					<td><%= f.text_field :produced %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_producer" %></td>
+				</tr>
+				<tr class="alt">
+					<td>Звёзды</td>
+					<td><%= f.text_field :stars %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_stars" %></td>
+				</tr>
+				<tr>
+					<td>Актёры</td>
+					<td><%= f.text_area :actors, :class => "table_textbox" %><%= f.button "IDMB", :disable_with => "Жди!", :class => "button", :name => "get_imdb_actors" %></td>
+				</tr>
+				<tr class="alt">
+					<td>Композитор</td>
+					<td><%= f.text_field :composer %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_composer" %></td>
+				</tr>
+				<tr>
+					<td>Рейтинг IMDB</td>
+					<td><%= f.text_field :imdb %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_rating" %></td>
+				</tr>
+				<tr class="alt">
+					<td>Примечания</td>
+					<td><%= f.text_field :remarks %></td>
+				</tr>
+				<tr>
+					<td>Описание</td>
+					<td><%= f.text_area :desc %></td>
+				</tr>
+				<tr class="alt">
+					<td>Ссылка на IMDB</td>
+					<td><%= f.text_field :imdb_link %><%= f.button "Загрузить",:disable_with => "Жди!", :class => "button", :name => "get_imdb_all" %></td>
+				</tr>
+				<tr>
+					<td>Ссылка на Кинопоиск</td>
+					<td><%= f.text_field :kinopoisk_link %><%= f.button "Загрузить", :disable_with => 'Жди!', :class => "button", :name => "get_kinopoisk_all" %></td>
+				</tr>
+			</table>
+		</div>
+		<%= f.fields_for :movie_tech_detail, @movie.movie_tech_detail do |md| %>
+		<div class="item item_new">
+			<div class="header">
+				<h3>Тех. данные фильма</h3>
+			</div>
+			<table width="100%" border="0" class="table_content_in">
+				<tbody>
+					<tr>
+						<td>Звуковые дорожки</td>
+						<td colspan="2"><%= f.text_field :lang %></td>
+					</tr>
+					<tr>
+						<td>Продолжительность</td>
+						<td><%= md.text_field :duration %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_duration" %></td>
+					</tr>
+					<tr>
+						<td width="20%">Размер файла</td>
+						<td width="80%"><%= md.text_field :filesize %></td>
+					</tr>
+					<tr>
+						<td>Размер картинки</td>
+						<td><%= md.text_field :resolution %></td>
+					</tr>
+					<tr>
+						<td>Тип файла</td>
+						<td><%= md.text_field :filetype %></td>
+					</tr>
+					<tr>
+						<td>Скриншот №1</td>
+						<td><%= md.text_field :screenshots %></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	<% end %>
+	</div>
+<% end %>

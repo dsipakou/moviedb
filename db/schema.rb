@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130214083239) do
+ActiveRecord::Schema.define(:version => 20130218160623) do
 
   create_table "genres", :force => true do |t|
     t.string   "eng"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20130214083239) do
   end
 
   create_table "movie_tech_details", :force => true do |t|
-    t.string   "movie_id"
+    t.integer  "movie_id"
     t.string   "duration"
     t.string   "filesize"
     t.string   "resolution"
@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20130214083239) do
     t.string   "disknum"
     t.string   "name"
     t.string   "orig_name"
-    t.string   "year"
+    t.integer  "year",           :limit => 2
     t.string   "genre"
     t.string   "director"
     t.string   "produced"
@@ -51,8 +51,14 @@ ActiveRecord::Schema.define(:version => 20130214083239) do
     t.string   "image_link"
     t.string   "imdbhtml1"
     t.string   "imdbhtml2"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "tests", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end

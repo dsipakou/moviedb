@@ -1,53 +1,89 @@
 <!-- header -->
 <div class="table_header">
-    <div class="table_header_text">
-        <span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
-        <span id="TableHeaderContentPlaceHolder_lCount">1 - 5</span>
-        <span id="TableHeaderContentPlaceHolder_Label1">из</span>
-        <span id="TableHeaderContentPlaceHolder_lCountAll">12</span>
-    </div>
+	<div class="table_header_text">
+		<span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
+		<span id="TableHeaderContentPlaceHolder_lCount">1 - 5</span>
+		<span id="TableHeaderContentPlaceHolder_Label1">из</span>
+		<span id="TableHeaderContentPlaceHolder_lCountAll"><%= @count %></span>
+	</div>
 </div>
 
 <!-- -->
 <div class="table_content">
-  <div align="right" style="right: 0px; float: right;">
-      <input name="ctl00$ContentHeaderPlaceHolder$tbSearch" type="text" id="ContentHeaderPlaceHolder_tbSearch" class="textbox" />
-      <a id="ContentHeaderPlaceHolder_lbSearch" class="button" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbSearch','')">Искать</a>
-  </div>
-  <div style="float: right; margin-right: 100px;">
-      <div id="ContentHeaderPlaceHolder_pSorting" align="Center">
-          <a id="ContentHeaderPlaceHolder_lbNameSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbNameSort','')">Название</a>
-          <a id="ContentHeaderPlaceHolder_lbYearSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbYearSort','')">Год выпуска</a>
-          <a id="ContentHeaderPlaceHolder_lbIMDBSort" class="button small" href="javascript:__doPostBack('ctl00$ContentHeaderPlaceHolder$lbIMDBSort','')">Рейтинг IMDB</a>
-      </div>
-  </div>
-  <div align="center" style="float: left;" class="filtered">
+	<table width=100%>
+		<tr>
+			<td class="filter">
+				<div align="right" style="right: 0px; float: right;">
+					<%= form_tag movies_path, :method => "get", :style => "margin: 0px" do %>
+						<%= text_field_tag :search, params[:search] %>
+						<%= submit_tag "Поиск", :disable_with => 'Поиск...', :class => "button", :name => nil %>
+					<% end %>
+				</div>
+				<% if session[:disknum] %>
+					&nbsp;&nbsp;Номер диска:
+					<%= link_to "#{session[:disknum]}", movies_path(clear_filter: 'disknum'), class: "filter" %>
+				<% end %>
+				<% if session[:director] %>
+					&nbsp;&nbsp;Режиссёр:
+					<%= link_to "#{session[:director]}", movies_path(clear_filter: 'director'), class: "filter" %>
+				<% end %>
+				<% if session[:actor] %>
+					&nbsp;&nbsp;Актёр:
+					<%= link_to "#{session[:actor]}", movies_path(clear_filter: 'actor'), class: "filter" %>
+				<% end %>
+				<% if session[:year_from] %>
+					&nbsp;&nbsp;Годы:
+					<%= link_to "с #{session[:year_from]} по #{session[:year_to]}", movies_path(clear_filter: 'years'), class: "filter" %>
+				<% end %>
+				<% if session[:imdb_from] %>
+					&nbsp;&nbsp;Рейтинг IMDB:
+					<%= link_to "с #{session[:imdb_from]} по #{session[:imdb_to]}", movies_path(clear_filter: 'imdb'), class: "filter" %>
+				<% end %>
 
-  </div>
-  <br />
+				<% if session[:search] %>
+					&nbsp;&nbsp;Поиск:
+					<%= link_to "#{session[:search]}", movies_path(clear_filter: 'search'), class: "filter" %>
+				<% end %>
+			</td>
+		</tr>
+		<tr>
+			<td align="center"><% if session[:sorting] == "name asc" %>&uarr;<% end %><% if session[:sorting] == "name desc" %>&darr;<% end %><%= link_to "Название", movies_path(sorting: 'name'), class: 'name' %>&nbsp;&nbsp;<% if session[:sorting] == "year asc" %>&uarr;<% end %><% if session[:sorting] == "year desc" %>&darr;<% end %><%= link_to "Год", movies_path(sorting: 'year'), class: 'name' %>&nbsp;&nbsp;<% if session[:sorting] == "imdb asc" %>&uarr;<% end %><% if session[:sorting] == "imdb desc" %>&darr;<% end %><%= link_to "Рейтинг IMDB", movies_path(sorting: 'imdb'), class: 'name' %></td>
+		</tr>
+	</table>
+
 </div>
 
-<!-- -->
 <div class="table_control_panel">
-    <div class="OTC CUC LTC">
-        <a class="PTC AUC" href="./new">Новый фильм</a><div class="ITC">
-        </div>
-    </div>
-    <div class="OTC CUC LTC">
-        <a id="ControlContentPlaceHolder_lbExportToExcel" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbExportToExcel','')">Экспортировать в Excel</a><div class="ITC">
-        </div>
-    </div>
-    <div class="OTC CUC LTC">
-        <a id="ControlContentPlaceHolder_lbImportFromExcel" class="PTC AUC" href="javascript:__doPostBack('ctl00$ControlContentPlaceHolder$lbImportFromExcel','')">Импорт из Excel</a><div class="ITC">
-        </div>
-    </div>
+	<div class="OTC CUC LTC">
+		<%= link_to 'Новый фильм', new_movie_path, class: "PTC AUC" %><div class="ITC">
+		</div>
+	</div>
+	<div class="OTC CUC LTC">
+		<a class="PTC AUC">Экспортировать в Excel</a><div class="ITC">
+		</div>
+	</div>
+	<div class="OTC CUC LTC">
+		<a class="PTC AUC">Импорт из Excel</a><div class="ITC">
+		</div>
+	</div>
 </div>
 
-<!-- -->
+
 <div class="table_content_in">
-  <%= render :partial => "index_inner"  %>
+	<div style="padding-top: 5px; padding-bottom: 5px;">
+
+	</div>
+	<div>
+		<div style="padding-top:5px; padding-bottom:5px;">
+			<%= paginate @movies  %>
+		</div>
+		<div align="center" style="float: left;" class="filtered">
+			<%= render :partial => "index_inner" %>
+		</div>
+	</div>
+
 </div>
 
-<!-- -->
-<div class="table_bottom">
+<div id="table_bottom">
+
 </div>

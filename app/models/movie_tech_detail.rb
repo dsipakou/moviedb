@@ -1,4 +1,11 @@
 class MovieTechDetail < ActiveRecord::Base
-  attr_accessible :duration, :filesize, :filetype, :movie_id, :resolution, :screenshots
-  belongs_to :movie
+	belongs_to :movie
+
+	attr_accessible :movie_id,
+					:duration,
+					:filesize,
+					:filetype,
+					:movie_id,
+					:resolution,
+					:screenshots
 end

@@ -2,6 +2,12 @@
 	$(function() {
 		$("#tabs").tabs();
 	});
+	$(document).ready(function() {
+		$("#test_but").click(function(event) {
+			alertify.alert("Хуй!!!!!");
+		});
+	});
+
 </script>
 <div id="wide_content">
 	<div class="table_header">
@@ -11,14 +17,15 @@
 		<div class="OTC CUC LTC"><%= link_to 'Редактировать', edit_movie_path(@movie), :class => "PTC AUC" %><div class="ITC"></div></div>
 		<div class="OTC CUC LTC"><%= link_to 'Удалить', @movie, method: :delete, data: { confirm: 'Ололошки, точно удалить?' }, :class => "PTC AUC" %><div class="ITC"></div></div>
 
-		<div class="OTC CUC LTC"><%= link_to "Экспорт в Excel", "/export/#{@movie.id}", class: "PTC AUC" %><div class="ITC"></div></div>
+		<div class="OTC CUC LTC"><%= link_to "Экспорт в Excel", "/export/#{@movie.id}", class: "PTC AUC", id: "export_but" %><div class="ITC"></div></div>
+		<div class="OTC CUC LTC"><a href="#" id="test_but" data-confirm="ололололололо">Test</a><div class="ITC"></div></div>
 	</div>
 	<div class="table_content_in">
 		<table width="100%" class="summary">
 			<tr>
 				<td width="1px">
 					<div style="margin-right: 10px;">
-						<%= image_tag (@movie.image_link) %>
+						<% unless @movie.image_link.empty? %><%= image_tag (@movie.image_link) %><% end %>
 					</div>
 				</td>
 				<td style="padding-left: 10px; vertical-align: top;">
@@ -29,10 +36,11 @@
 					</div>
 					<h1>
 						<%= @movie.name %><br />
-						<span class="english"><%= @movie.orig_name %> (<%= @movie.year %>)</span>
+						<span class="english"><%= @movie.orig_name %> <% if @movie.year > 0 %>(<%= @movie.year %>)<% end %></span>
 					</h1>
 					<table style="font-size: 11px;">
 						<tr>
+							<td><img src="/assets/view/imdb_details.png" alt=""></td>
 							<td>
 								<strong style="font-size: 2em;"><%= link_to "#{@movie.imdb / 10}.#{@movie.imdb % 10}", @movie.imdb_link, class: "name" %></strong>/10
 							</td>
@@ -60,34 +68,55 @@
 				<li><a href="#tabs-1">Обзор</a></li>
 				<li><a href="#tabs-2">Тех данные</a></li>
 			</ul>
-			<div>
-				<table cellspacing="7">
+			<div id="tabs-1">
+				<table cellspacing="7" class="summary">
 					<tbody>
 						<tr>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lProduced" class="DD" style="font-weight:bold;">Продюссер</span></td>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lProducedValue" class="DD"><%= @movie.produced %></span></td>
+							<th>Продюссер</th>
+							<td><%= @movie.produced %></td>
 						</tr>
 						<tr>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lActors" class="DD" style="font-weight:bold;">Актёры</span></td>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lActorsValue" class="DD"><%= @movie.actors %></span></td>
+							<th>Актёры</th>
+							<td><%= @movie.actors %></td>
 						</tr>
 						<tr>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lComposer" class="DD" style="font-weight:bold;">Композитор</span></td>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lComposerValue" class="DD"><%= @movie.composer %></span></td>
+							<th>Композитор</th>
+							<td><%= @movie.composer %></td>
 						</tr>
 						<tr>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDesc" class="DD" style="font-weight:bold;">Описание</span></td>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lDescValue" class="DD"><%= @movie.desc %></span></td>
+							<th>Описание</th>
+							<td><%= @movie.desc %></td>
 						</tr>
 						<tr>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lRemark" class="DD" style="font-weight:bold;">Примечания</span></td>
-							<td><span id="MainContentPlaceHolder_tContainer_TabPanel1_lRemarkValue" class="DD"><%= @movie.remarks %></span></td>
+							<th>Примечания</th>
+							<td><%= @movie.remarks %></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div>
-				тест
+			<div id="tabs-2" class="tabscontent">
+				<table class="summary">
+					<tr>
+						<th>Звуковые дорожки</th>
+						<td><%= @movie.lang %></td>
+					</tr>
+					<tr>
+						<th>Продолжительность</th>
+						<td><% unless @movie.movie_tech_detail.duration.empty? %><%= "#{Integer(@movie.movie_tech_detail.duration) / 60}:#{Integer(@movie.movie_tech_detail.duration) - (Integer(@movie.movie_tech_detail.duration) / 60) * 60}" %><% end %></td>
+					</tr>
+					<tr>
+						<th>Размер файла</th>
+						<td><%= @movie.movie_tech_detail.filesize %></td>
+					</tr>
+					<tr>
+						<th>Размер картинки</th>
+						<td><%= @movie.movie_tech_detail.resolution %></td>
+					</tr>
+					<tr>
+						<th>Тип файла</th>
+						<td><%= @movie.movie_tech_detail.filetype %></td>
+					</tr>
+				</table>
 			</div>
 		</div>
 	</div>

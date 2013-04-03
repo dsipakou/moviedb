@@ -28,7 +28,7 @@ class Movie < ActiveRecord::Base
 	def self.filtering(disknum, search, actor, director, year_from, year_to, imdb_from, imdb_to, sorting)
 		query = ""
 		if search
-			query += "disknum LIKE '%#{search}%' or name LIKE '%#{search}%' or orig_name LIKE '%#{search}%'"
+			query += "disknum LIKE '%#{search}%' or name LIKE '%#{search}%' or orig_name LIKE '%#{search}%'or director LIKE '#{search}' or stars LIKE '#{search}'"
 		end
 		if disknum
 			query += "AND " unless query.empty?

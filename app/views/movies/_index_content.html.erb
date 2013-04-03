@@ -1,10 +1,13 @@
 <!-- header -->
 <div class="table_header">
 	<div class="table_header_text">
-		<span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
-		<span id="TableHeaderContentPlaceHolder_lCount">1 - 5</span>
+		<% if @count > 0 %><span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
+		<span id="TableHeaderContentPlaceHolder_lCount"><% if params[:page] %><%= (Integer(params[:page]) - 1) * 5 + 1 %><% else %><%= "1" %><% end %> — <% if params[:page] %><% if Integer(params[:page]) * 5 > @count %><%= @count %><% else %><%= Integer(params[:page]) * 5 %><% end %><% else %><% if @count > 5 %><%= "5"  %><% else %><%= @count %><% end %><% end %></span>
 		<span id="TableHeaderContentPlaceHolder_Label1">из</span>
 		<span id="TableHeaderContentPlaceHolder_lCountAll"><%= @count %></span>
+		<% else %>
+		<span>Ничего не найдено :(</span>
+		<% end %>
 	</div>
 </div>
 
@@ -58,30 +61,19 @@
 		<%= link_to 'Новый фильм', new_movie_path, class: "PTC AUC" %><div class="ITC">
 		</div>
 	</div>
-	<div class="OTC CUC LTC">
-		<a class="PTC AUC">Экспортировать в Excel</a><div class="ITC">
-		</div>
-	</div>
-	<div class="OTC CUC LTC">
-		<a class="PTC AUC">Импорт из Excel</a><div class="ITC">
+	<div class="OTC CUC LTC"><%= link_to "Экспорт в Excel", "/export_many", class: "PTC AUC" %><div class="ITC">
 		</div>
 	</div>
 </div>
 
 
 <div class="table_content_in">
-	<div style="padding-top: 5px; padding-bottom: 5px;">
-
-	</div>
 	<div>
 		<div style="padding-top:5px; padding-bottom:5px;">
-			<%= paginate @movies  %>
-		</div>
-		<div align="center" style="float: left;" class="filtered">
+			<%= paginate @movies %>
 			<%= render :partial => "index_inner" %>
 		</div>
 	</div>
-
 </div>
 
 <div id="table_bottom">

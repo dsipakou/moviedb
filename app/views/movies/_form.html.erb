@@ -12,17 +12,18 @@
 		<% end %>
 	</div>
 	<div class="table_control_panel">
-		<div class="OTC CUC LTC"><%= f.submit "Сохранить", :class => "but_menu", :disable_with => "Жди!", :name => "movie_save" %><div class="ITC"></div></div>
+		<div class="OTC CUC LTC"><%= f.submit "Сохранить", :class => "but_menu", :disable_with => "Сохранить", :name => "movie_save" %><div class="ITC"></div></div>
 		<div class="OTC CUC LTC"><%= link_to "Отмена", movies_path, class: "PTC AUC" %><div class="ITC"></div></div>
 	</div>
 	<div class="table_content_in">
-		<div class="item photo">
+		<div class="item photo" align="center">
 			<div class="header">
 				<h3><span>Постер</span></h3>
 			</div>
 			<%= f.hidden_field :image_link %>
-			<%= image_tag (@movie.image_link) if @movie.image_link && !@movie.image_link.empty? %>
-			<%= f.button "Загрузить постер", :disable_with => 'Жди!', :class => "button", :name => "imdb_upload" %>
+			<%= image_tag (@movie.image_link) if @movie.image_link && !@movie.image_link.empty? %><br /><br />
+			<%= f.button "Найти на IMDB", :disable_with => 'Найти на IMDB', :class => "button", :name => "imdb_upload" %><br /><br />
+			<%= text_field_tag :url_upload_textbox %>&nbsp;&nbsp;<%= f.button "Найти по URL", :disable_with => 'Найти по URL', :class => "button", :name => "url_upload_button" %>
 		</div>
 		<div class="item item_new">
 			<div class="header">
@@ -39,39 +40,39 @@
 				</tr>
 				<tr>
 					<td>Название в оригинале</td>
-					<td><%= f.text_field :orig_name %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_orig_name" %></td>
+					<td><%= f.text_field :orig_name %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_orig_name" %></td>
 				</tr>
 				<tr class="alt">
 					<td>Год выпуска</td>
-					<td><%= f.text_field :year %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_year" %></td>
+					<td><%= f.text_field :year %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_year" %></td>
 				</tr>
 				<tr>
 					<td>Жанр</td>
-					<td><%= f.text_field :genre %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_genre" %></td>
+					<td><%= f.text_field :genre %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_genre" %></td>
 				</tr>
 				<tr class="alt">
 					<td>Режиссёр</td>
-					<td><%= f.text_field :director %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_director" %></td>
+					<td><%= f.text_field :director %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_director" %></td>
 				</tr>
 				<tr>
 					<td>Продюссер</td>
-					<td><%= f.text_field :produced %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_producer" %></td>
+					<td><%= f.text_field :produced %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_producer" %></td>
 				</tr>
 				<tr class="alt">
 					<td>Звёзды</td>
-					<td><%= f.text_field :stars %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_stars" %></td>
+					<td><%= f.text_field :stars %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_stars" %></td>
 				</tr>
 				<tr>
 					<td>Актёры</td>
-					<td><%= f.text_area :actors, :class => "table_textbox" %><%= f.button "IDMB", :disable_with => "Жди!", :class => "button", :name => "get_imdb_actors" %></td>
+					<td><%= f.text_area :actors, :class => "table_textbox" %><%= f.button "IDMB", :disable_with => "IMDB", :class => "button", :name => "get_imdb_actors" %></td>
 				</tr>
 				<tr class="alt">
 					<td>Композитор</td>
-					<td><%= f.text_field :composer %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_composer" %></td>
+					<td><%= f.text_field :composer %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_composer" %></td>
 				</tr>
 				<tr>
 					<td>Рейтинг IMDB</td>
-					<td><%= f.text_field :imdb %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_rating" %></td>
+					<td><%= f.text_field :imdb %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_rating" %></td>
 				</tr>
 				<tr class="alt">
 					<td>Примечания</td>
@@ -83,11 +84,11 @@
 				</tr>
 				<tr class="alt">
 					<td>Ссылка на IMDB</td>
-					<td><%= f.text_field :imdb_link %><%= f.button "Загрузить",:disable_with => "Жди!", :class => "button", :name => "get_imdb_all" %></td>
+					<td><%= f.text_field :imdb_link %><%= f.button "Загрузить",:disable_with => "Загрузить", :class => "button", :name => "get_imdb_all" %></td>
 				</tr>
 				<tr>
 					<td>Ссылка на Кинопоиск</td>
-					<td><%= f.text_field :kinopoisk_link %><%= f.button "Загрузить", :disable_with => 'Жди!', :class => "button", :name => "get_kinopoisk_all" %></td>
+					<td><%= f.text_field :kinopoisk_link %><%= f.button "Загрузить", :disable_with => 'Загрузить', :class => "button", :name => "get_kinopoisk_all" %></td>
 				</tr>
 			</table>
 		</div>
@@ -104,7 +105,7 @@
 					</tr>
 					<tr>
 						<td>Продолжительность</td>
-						<td><%= md.text_field :duration %><%= f.button "IMDB",:disable_with => "Жди!", :class => "button", :name => "get_imdb_duration" %></td>
+						<td><%= md.text_field :duration %><%= f.button "IMDB",:disable_with => "IMDB", :class => "button", :name => "get_imdb_duration" %></td>
 					</tr>
 					<tr>
 						<td width="20%">Размер файла</td>

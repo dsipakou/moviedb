@@ -3,8 +3,6 @@ require 'open-uri'
 
 class IMDB
 
-	attr_reader :image_name
-
 	POSTER_XPATH			= "//div[@class='image']/a[contains(@href, 'media')]/img[@itemprop='image']"
 	DIRECTOR_XPATH			= "//a[text()='Directed by']/../../../..//a[contains(@href, 'name')]"
 	DIRECTOR_SERIES_XPATH	= "//a[text()='Series Directed by']/../../../..//a[contains(@href, 'name')]"
@@ -35,7 +33,7 @@ class IMDB
 
 	private
 	def get_page(url)
-		Nokogiri::HTML(open(url))
+		 Nokogiri::HTML(open(url))
 	end
 
 	def get_rus_page(url)
@@ -103,12 +101,18 @@ class IMDB
 	end
 
 	def get_image
-		node = @main_page.xpath(POSTER_XPATH).first
-		src = node.attr('src');
-		@image_name = "#{get_orig_name}_#{get_year}_#{Time.now.usec}.png".tr(" ", "_")
-		File.open("#{IMAGE_SAVE_PATH}#{image_name}", 'wb') do |f|
-			f.write open(src).read
+		begin
+			node = @main_page.xpath(POSTER_XPATH).first
+			src = node.attr('src');
+			name = get_orig_name
+			name.gsub(/[^a-zA-Z0-9]/, '').empty? ? regexp = src.gsub(/[^a-zA-Z0-9]/, '') : regexp = name.gsub(/[^a-zA-Z0-9]/, '')
+			image_name = "#{regexp}_#{get_year}_#{Time.now.usec}.png".tr(" ", "_")
+			File.open("#{IMAGE_SAVE_PATH}#{image_name}", 'wb') do |f|
+				f.write open(src).read
+			end
+			"#{IMAGE_DB_PATH}#{image_name}"
+		rescue Exception
+			nil
 		end
-		"#{IMAGE_DB_PATH}#{image_name}"
 	end
 end

@@ -1,6 +1,9 @@
 require 'imdb_parser'
+require 'kinopoisk_parser'
+require 'excel_ops'
+require 'file_ops'
 require 'kaminari'
-require 'spreadsheet'
+
 
 class MoviesController < ApplicationController
 
@@ -8,11 +11,8 @@ class MoviesController < ApplicationController
 		set_filter
 		clear_filter
 		sorting
-		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting]).page(session[:page]).per(5)
+		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting]).page(params[:page]).per(5)
 		@count = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting]).count
-		if params[:xls]
-
-		end
 	end
 
 	def new
@@ -26,9 +26,19 @@ class MoviesController < ApplicationController
 	end
 
 	def export
-		export_xls
 		@movie = Movie.find(params[:id])
+		@excel = Excel.new(@movie)
+		@excel.export_one
+
 		redirect_to @movie
+	end
+
+	def export_many
+		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting])
+		@excel = Excel.new(@movies)
+		@excel.export_many
+
+		redirect_to movies_url
 	end
 
 	def get_titles_from_imdb
@@ -36,7 +46,7 @@ class MoviesController < ApplicationController
 			@imdb = IMDB.new(params[:movie][:imdb_link]) if params[:get_imdb_all] || params[:get_imdb_actors] || params[:imdb_upload] ||
 															params[:get_imdb_orig_name] || params[:get_imdb_year] || params[:get_imdb_rating] ||
 															params[:get_imdb_director] || params[:get_imdb_producer] || params[:get_imdb_composer] ||
-															params[:get_imdb_stars] || params[:get_imdb_genre]
+															params[:get_imdb_stars] || params[:get_imdb_genre] || params[:get_imdb_duration]
 
 			params[:movie][:orig_name]	= @imdb.get_orig_name	if params[:get_imdb_all] || params[:get_imdb_orig_name]
 			params[:movie][:year]		= @imdb.get_year		if params[:get_imdb_all] || params[:get_imdb_year]
@@ -54,44 +64,18 @@ class MoviesController < ApplicationController
 				@image_link = params[:movie][:image_link]
 			end
 		end
+		if params[:url_upload_button] && !params[:url_upload_textbox].empty?
+			@file_ops = FileOps.new()
+			params[:movie][:image_link] = @file_ops.get_image_from_url(params[:url_upload_textbox])
+			@image_link = params[:movie][:image_link]
+		end
 	end
 
 	def get_titles_from_kinopoisk
 		if params[:get_kinopoisk_all] && !params[:movie][:kinopoisk_link].empty?
-			@imdb = IMDB.new(params[:movie][:kinopoisk_link])
+			@kinopoisk = Kinopoisk.new(params[:movie][:kinopoisk_link])
+			@rating = @kinopoisk.get_rating
 		end
-	end
-
-	def export_xls
-		@movie = Movie.find(params[:id])
-		book = Spreadsheet::Workbook.new
-		sheet1 = book.create_worksheet
-		sheet1.name = 'dvd'
-		sheet1.row(0).concat %w{disknum name orig_name year genre director produced stars actors composer lang imdb_rating remarks desc imdb_link image_link duration file_size pic_size file_type screens}
-		sheet1[1,0] = @movie.disknum
-		sheet1[1,1] = @movie.name
-		sheet1[1,2] = @movie.orig_name
-		sheet1[1,3] = @movie.year
-		sheet1[1,4] = @movie.genre
-		sheet1[1,5] = @movie.director
-		sheet1[1,6] = @movie.produced
-		sheet1[1,7] = @movie.stars
-		sheet1[1,8] = @movie.actors
-		sheet1[1,9] = @movie.composer
-		sheet1[1,10] = @movie.lang
-		sheet1[1,11] = @movie.imdb
-		sheet1[1,12] = @movie.remarks
-		sheet1[1,13] = @movie.desc
-		sheet1[1,14] = @movie.imdb_link
-		sheet1[1,15] = @movie.image_link
-		sheet1[1,16] = @movie.movie_tech_detail.duration
-		sheet1[1,17] = @movie.movie_tech_detail.filesize
-		sheet1[1,18] = @movie.movie_tech_detail.resolution
-		sheet1[1,19] = @movie.movie_tech_detail.filetype
-		sheet1[1,20] = @movie.movie_tech_detail.screenshots
-
-		row = sheet1.row(1)
-		book.write 'test-Worksheet.xls'
 	end
 
 	def create
@@ -118,6 +102,7 @@ class MoviesController < ApplicationController
 	def update
 		@movie = Movie.find(params[:id])
 		get_titles_from_imdb
+		get_titles_from_kinopoisk
 		respond_to do |format|
 			if params[:movie_save]
 				if @movie.update_attributes(params[:movie])
@@ -155,36 +140,32 @@ class MoviesController < ApplicationController
 	def set_filter
 		if params[:search]
 			session[:search] = params[:search]
-			session[:director] = nil;
-			session[:actor] = nil
-			session[:year_from] = nil
-			session[:year_to] = nil
-			session[:disknum] = nil
-			session[:page] = 1
-		elsif params[:year_from]
+			session[:director], session[:actor], session[:year_from], session[:year_to], session[:disknum], session[:imdb_from], session[:imdb_to] = nil;
+		#elsif params[:year_from]
+		#	session[:search] = nil
+		#	session[:year_from] = Integer(params[:year_from])
+		#	session[:year_to] = Integer(params[:year_to])
+		#	if params[:imdb_from]
+		#		session[:imdb_from] = Integer(params[:imdb_from])
+		#		session[:imdb_to] = Integer(params[:imdb_to])
+		#	end
+		elsif params[:years]
 			session[:search] = nil
-			session[:year_from] = Integer(params[:year_from])
-			session[:year_to] = Integer(params[:year_to])
-			if params[:imdb_from]
-				session[:imdb_from] = Integer(params[:imdb_from])
-				session[:imdb_to] = Integer(params[:imdb_to])
+			session[:year_from] = Integer(params[:years].split(';')[0])
+			session[:year_to] = Integer(params[:years].split(';')[1])
+			if params[:imdb]
+				session[:imdb_from] = Integer(params[:imdb].split(';')[0])
+				session[:imdb_to] = Integer(params[:imdb].split(';')[1])
 			end
-			session[:page] = 1
 		elsif params[:actor]
 			session[:search] = nil
 			session[:actor] = params[:actor]
-			session[:page] = 1
 		elsif params[:director]
 			session[:search] = nil
 			session[:director] = params[:director]
-			session[:page] = 1
 		elsif params[:disknum]
 			session[:search] = nil
 			session[:disknum] = params[:disknum]
-			session[:page] = 1
-		end
-		if params[:page]
-			session[:page] = params[:page]
 		end
 	end
 
@@ -192,24 +173,18 @@ class MoviesController < ApplicationController
 		case params[:clear_filter]
 		when "director"
 			session[:director] = nil
-			session[:page] = 1
 		when "actor"
 			session[:actor] = nil
-			session[:page] = 1
 		when "search"
 			session[:search] = nil
-			session[:page] = 1
 		when "years"
 			session[:year_from] = nil
 			session[:year_to] = nil
-			session[:page] = 1
 		when "disknum"
 			session[:disknum] = nil
-			session[:page] = 1
 		when "imdb"
 			session[:imdb_from] = nil
 			session[:imdb_to] = nil
-			session[:page] = 1
 		end
 		redirect_to movies_url if params[:clear_filter]
 	end
@@ -217,11 +192,11 @@ class MoviesController < ApplicationController
 	def sorting
 		case params[:sorting]
 		when 'name'
-			session[:sorting] =~ /name/ ? session[:sorting] = "name desc" : session[:sorting] = "name asc"
+			session[:sorting] =~ /name/ ? session[:sorting] =~ /desc/ ? session[:sorting] = "name asc" : session[:sorting] = "name desc" : session[:sorting] = "name asc"
 		when 'year'
-			session[:sorting] =~ /year/ ? session[:sorting] = "year desc" : session[:sorting] = "year asc"
+			session[:sorting] =~ /year/ ? session[:sorting] =~ /desc/ ? session[:sorting] = "year asc" : session[:sorting] = "year desc" : session[:sorting] = "year asc"
 		when 'imdb'
-			session[:sorting] =~ /imdb/ ? session[:sorting] = "imdb desc" : session[:sorting] = "imdb asc"
+			session[:sorting] =~ /imdb/ ? session[:sorting] =~ /desc/ ? session[:sorting] = "imdb asc" : session[:sorting] = "imdb desc" : session[:sorting] = "imdb asc"
 		end
 	end
 end

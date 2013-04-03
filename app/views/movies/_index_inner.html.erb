@@ -1,71 +1,77 @@
-<div style="padding-top: 5px; padding-bottom: 5px;">
+<script>
+	$(document).ready(function() {
+		$('button').on('click', function() {
+			$(this).closest('table').find('.slidedown').slideToggle();
+		})
+	})
+</script>
+
+<% @movies.each do |movie| %>
+<div class="item">
+	<table border="0" width="100%">
+		<tbody>
+			<tr align="left" rowspan="3" class="altitem">
+				<td rowspan="4">
+					<% unless movie.image_link.empty? %><%= image_tag (movie.image_link), :size => "82x120"%><% end %>
+				</td>
+				<td width="30%">
+					<strong><%= link_to movie.name, movie, class: "name" %></strong>
+				</td>
+				<td width="52%" rowspan="4">
+					<table width="100%" border="0">
+						<tbody>
+							<tr>
+								<td class="titles"><%= "Режиссёр" unless movie.director.empty? %></td>
+								<td><% movie.director.split(",").each do |director| %><%= link_to director.strip, movies_path(director: director.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+							</tr>
+							<tr>
+								<td class="titles"><%= "Актёры" unless movie.stars.empty? %></td>
+								<td><% movie.stars.split(",").each do |star| %><%= link_to star.strip, movies_path(actor: star.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+							</tr>
+							<tr>
+								<td class="titles"><%= "Продюссер" unless movie.produced.empty? %></td>
+								<td><%= movie.produced %></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+				<td width="10%" valign="center" rowspan="4">
+					<table>
+						<tbody>
+							<tr>
+								<td><%= image_tag ("/assets/view/dvd-icon.png") unless movie.disknum.empty? %></td>
+								<td><% movie.disknum.split(",").each do |disk| %><%= link_to disk.strip, movies_path(disknum: disk.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+							</tr>
+							<tr>
+								<td><%= image_tag ("/assets/view/imdb.png") if movie.imdb > 0 %></td>
+								<td><% if movie.imdb > 0 %><%= link_to "#{movie.imdb / 10}.#{movie.imdb % 10}", movie.imdb_link, class: "name" %><% end %></td>
+							</tr>
+							<tr>
+								<td><%= image_tag ("/assets/view/speach.jpg") unless movie.lang.empty? %></td>
+								<td><%= movie.lang %></td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+			<tr align="left" class="altitem">
+				<td><%= movie.orig_name %> <% if movie.year > 0 %>(<%= movie.year %>)<% end %></td>
+			</tr>
+			<tr align="left" class="altitem">
+				<td><% movie.genre.split(",").each do |genre| %><%= link_to genre.strip, movies_path(genre: genre.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
+			</tr>
+			<tr>
+				<td valign="bottom"><% unless movie.desc.empty? %><button class="desc_button">Показать описание >></button><% end %></td>
+			</tr>
+			<tr>
+				<td colspan="4">
+
+					<div class="slidedown">
+						<%= movie.desc %>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
-<div>
-	<div>
-		<% @movies.each do |movie| %>
-		<div class="item">
-			<table border="0">
-				<tbody>
-					<tr align="left" rowspan="3" class="altitem">
-						<td rowspan="3">
-							<%= image_tag (movie.image_link), :size => "82x120"%>
-						</td>
-						<td width="30%">
-							<strong><%= link_to movie.name, movie, class: "name" %></strong>
-						</td>
-						<td width="52%" rowspan="3">
-							<table width="100%">
-								<tbody>
-									<tr>
-										<td class="titles">Режиссёр</td>
-										<td><% movie.director.split(",").each do |director| %><%= link_to director.strip, movies_path(director: director.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
-									</tr>
-									<tr>
-										<td class="titles">Актёры</td>
-										<td><% movie.stars.split(",").each do |star| %><%= link_to star.strip, movies_path(actor: star.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
-									</tr>
-									<tr>
-										<td class="titles">Продюссер</td>
-										<td><%= movie.produced %></td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-						<td width="10%" valign="center" rowspan="3">
-							<table>
-								<tbody>
-									<tr>
-										<td><img src="../../Icons/dvd-icon.png"></td>
-										<td><% movie.disknum.split(",").each do |disk| %><%= link_to disk.strip, movies_path(disknum: disk.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
-									</tr>
-									<tr>
-										<td><img src="../../Icons/imdb.png" style="border-style:None;"></td>
-										<td><%= link_to "#{movie.imdb / 10}.#{movie.imdb % 10}", movie.imdb_link, class: "name" %></td>
-									</tr>
-									<tr>
-										<td><img src="../../Icons/speach.jpg"></td>
-										<td></td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-					<tr align="left" class="altitem">
-						<td><%= movie.orig_name %> (<%= movie.year if movie.year > 0 %>)</td>
-					</tr>
-					<tr align="left" class="altitem">
-						<td class="genres"><%= movie.genre %></td>
-					</tr>
-					<tr>
-						<td colspan="4">
-							<div class="popup">
-								<%= movie.desc %>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<% end %>
-	</div>
-</div>
+<% end %>

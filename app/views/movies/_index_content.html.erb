@@ -1,10 +1,10 @@
 <!-- header -->
 <div class="table_header">
 	<div class="table_header_text">
-		<% if @count > 0 %><span id="TableHeaderContentPlaceHolder_Label7">Фильмы:</span>
-		<span id="TableHeaderContentPlaceHolder_lCount"><% if params[:page] %><%= (Integer(params[:page]) - 1) * 5 + 1 %><% else %><%= "1" %><% end %> — <% if params[:page] %><% if Integer(params[:page]) * 5 > @count %><%= @count %><% else %><%= Integer(params[:page]) * 5 %><% end %><% else %><% if @count > 5 %><%= "5"  %><% else %><%= @count %><% end %><% end %></span>
-		<span id="TableHeaderContentPlaceHolder_Label1">из</span>
-		<span id="TableHeaderContentPlaceHolder_lCountAll"><%= @count %></span>
+		<% if @count > 0 %><span>Фильмы:</span>
+		<span><%= items_on_the_page_label(@count) %></span>
+		<span>из</span>
+		<span><%= @count %></span>
 		<% else %>
 		<span>Ничего не найдено :(</span>
 		<% end %>
@@ -18,7 +18,7 @@
 			<td class="filter">
 				<div align="right" style="right: 0px; float: right;">
 					<%= form_tag movies_path, :method => "get", :style => "margin: 0px" do %>
-						<%= text_field_tag :search, params[:search] %>
+						<%= text_field_tag :search, session[:search] %>
 						<%= submit_tag "Поиск", :disable_with => 'Поиск...', :class => "button", :name => nil %>
 					<% end %>
 				</div>

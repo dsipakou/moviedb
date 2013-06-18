@@ -15,6 +15,10 @@ class Kinopoisk
 		Nokogiri::HTML(open(url), nil, 'Windows-1251')
 	end
 
+	def get_rating_page(url)
+		@new_url = url
+	end
+
 	def get_items(page, xpath)
 		items = Array.new
 		page.xpath(xpath).each do |item|

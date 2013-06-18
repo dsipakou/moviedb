@@ -1,8 +1,40 @@
+<script>
+	$(document).ready(function() {
+		$('#genre_list input').change(function(e){
+			var $inputs = $(e.currentTarget).parent().find('input');
+			$inputs.each(function(){
+				if (this != e.currentTarget) {
+					$(this).prop('checked', false);
+				}
+			});
+			var $div = $(e.currentTarget).parent();
+			checkboxSetup($div)
+		});
+		$('#genre_list input').each(function() {
+ 			if ($(this).prop('checked')) $(this).change();
+		});
+	});
+
+	function checkboxSetup(div)
+	{
+		div.find("#genre_exc_").prop('checked') ? div.addClass("exclude") : div.removeClass("exclude");
+		div.find("#genre_inc_").prop('checked') ? div.addClass("include") : div.removeClass("include");
+		!div.find("#genre_inc_").prop("checked") && !div.find("#genre_exc_").prop("checked") ? div.addClass("inactive") : div.removeClass("inactive");
+	}
+
+
+</script>
 <table>
 	<tbody>
 		<% genre.each do |g| %>
 		<tr>
-			<td><%= check_box_tag 'genre', g.id%><%= g.eng %></td>
+			<td>
+				<div id="genre_list" class="inactive">
+					<%= genre_checkbox("inc", g.id) %>
+					&#43;&nbsp;&nbsp;&nbsp;<%= g.eng %>&nbsp;&nbsp;&nbsp;&#45;
+					<%= genre_checkbox("exc", g.id) %>
+				</div>
+			</td>
 		</tr>
 		<% end %>
 	</tbody>

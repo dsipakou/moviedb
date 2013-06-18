@@ -430,7 +430,8 @@ div.item
     border-radius:15px;*/
     padding: 5px;
 
-    font: .85em;
+    font-size: .85em;
+
 
     color: #666;
 }
@@ -970,3 +971,8 @@ a.mini {
     padding-bottom: 20px;
     margin-top: 30px;
 }
+
+div#genre_list {font-size: 0.85em;}
+.inactive { opacity: 0.3;  }
+.include { color: green;}
+.exclude { text-decoration: line-through; color: red;}

@@ -11,8 +11,8 @@ class MoviesController < ApplicationController
 		set_filter
 		clear_filter
 		sorting
-		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting]).page(params[:page]).per(5)
-		@count = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting]).count
+		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).page(params[:page]).per(5)
+		@count = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).count
 	end
 
 	def new
@@ -34,7 +34,7 @@ class MoviesController < ApplicationController
 	end
 
 	def export_many
-		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:sorting])
+		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting])
 		@excel = Excel.new(@movies)
 		@excel.export_many
 
@@ -140,23 +140,19 @@ class MoviesController < ApplicationController
 	def set_filter
 		if params[:search]
 			session[:search] = params[:search]
-			session[:director], session[:actor], session[:year_from], session[:year_to], session[:disknum], session[:imdb_from], session[:imdb_to] = nil;
-		#elsif params[:year_from]
-		#	session[:search] = nil
-		#	session[:year_from] = Integer(params[:year_from])
-		#	session[:year_to] = Integer(params[:year_to])
-		#	if params[:imdb_from]
-		#		session[:imdb_from] = Integer(params[:imdb_from])
-		#		session[:imdb_to] = Integer(params[:imdb_to])
-		#	end
+			session[:director], session[:actor], session[:year_from], session[:year_to], session[:disknum], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc] = nil;
 		elsif params[:years]
 			session[:search] = nil
+			session[:genre_inc] = nil
+			session[:genre_exc] = nil
 			session[:year_from] = Integer(params[:years].split(';')[0])
 			session[:year_to] = Integer(params[:years].split(';')[1])
 			if params[:imdb]
 				session[:imdb_from] = Integer(params[:imdb].split(';')[0])
 				session[:imdb_to] = Integer(params[:imdb].split(';')[1])
 			end
+			session[:genre_inc] = params[:genre_inc] if params[:genre_inc]
+			session[:genre_exc] = params[:genre_exc] if params[:genre_exc]
 		elsif params[:actor]
 			session[:search] = nil
 			session[:actor] = params[:actor]

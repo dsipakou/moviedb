@@ -12,7 +12,7 @@
 		<tbody>
 			<tr align="left" rowspan="3" class="altitem">
 				<td rowspan="4">
-					<% unless movie.image_link.empty? %><%= image_tag (movie.image_link), :size => "82x120"%><% end %>
+					<% if movie.image_link && !movie.image_link.empty? %><%= image_tag (movie.image_link), :size => "82x120"%><% end %>
 				</td>
 				<td width="30%">
 					<strong><%= link_to movie.name, movie, class: "name" %></strong>

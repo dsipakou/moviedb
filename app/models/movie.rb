@@ -25,7 +25,7 @@ class Movie < ActiveRecord::Base
 	validates_presence_of :name, :message => "please"
 	validates_numericality_of :year, :imdb, message: " should be a number :("
 
-	def self.filtering(disknum, search, actor, director, year_from, year_to, imdb_from, imdb_to, sorting)
+	def self.filtering(disknum, search, actor, director, year_from, year_to, imdb_from, imdb_to, genre_inc, genre_exc, sorting)
 		query = ""
 		if search
 			query += "disknum LIKE '%#{search}%' or name LIKE '%#{search}%' or orig_name LIKE '%#{search}%'or director LIKE '#{search}' or stars LIKE '#{search}'"
@@ -50,8 +50,29 @@ class Movie < ActiveRecord::Base
 			imdb_from = Integer(imdb_from) * 10
 			imdb_to = Integer(imdb_to) * 10
 			query += "AND " unless query.empty?
-			query += "(imdb >= #{imdb_from} AND imdb <= #{imdb_to})"
+			query += "(imdb >= #{imdb_from} AND imdb <= #{imdb_to}) "
 		end
+		if genre_inc
+			query += " AND " unless query.empty?
+			query += "("
+			genre_inc.each do |genre|
+				genre = Genre.find(genre)
+				query += "genre LIKE '%#{genre.eng}%' OR "
+			end
+			query += ")"
+			query = query.gsub('OR )', ')')
+		end
+		if genre_exc
+			query += " AND " unless query.empty?
+			query += "("
+			genre_exc.each do |genre|
+				genre = Genre.find(genre)
+				query += "genre NOT LIKE '%#{genre.eng}%' AND "
+			end
+			query += ")"
+			query = query.gsub('AND )', ')');
+		end
+
 		if (query.empty?)
 			sorting ? Movie.order(sorting) : Movie.order("name desc")
 		else

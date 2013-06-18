@@ -18,7 +18,7 @@
 		<div class="OTC CUC LTC"><%= link_to 'Удалить', @movie, method: :delete, data: { confirm: 'Ололошки, точно удалить?' }, :class => "PTC AUC" %><div class="ITC"></div></div>
 
 		<div class="OTC CUC LTC"><%= link_to "Экспорт в Excel", "/export/#{@movie.id}", class: "PTC AUC", id: "export_but" %><div class="ITC"></div></div>
-		<div class="OTC CUC LTC"><a href="#" id="test_but" data-confirm="ололололололо">Test</a><div class="ITC"></div></div>
+		<div class="OTC CUC LTC"><a href="#" id="test_but" data-confirm="">Test</a><div class="ITC"></div></div>
 	</div>
 	<div class="table_content_in">
 		<table width="100%" class="summary">
@@ -102,7 +102,7 @@
 					</tr>
 					<tr>
 						<th>Продолжительность</th>
-						<td><% unless @movie.movie_tech_detail.duration.empty? %><%= "#{Integer(@movie.movie_tech_detail.duration) / 60}:#{Integer(@movie.movie_tech_detail.duration) - (Integer(@movie.movie_tech_detail.duration) / 60) * 60}" %><% end %></td>
+						<td><%= duration(@movie) %></td>
 					</tr>
 					<tr>
 						<th>Размер файла</th>

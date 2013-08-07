@@ -4,7 +4,6 @@ require 'excel_ops'
 require 'file_ops'
 require 'kaminari'
 
-
 class MoviesController < ApplicationController
 
 	def index
@@ -13,6 +12,10 @@ class MoviesController < ApplicationController
 		sorting
 		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).page(params[:page]).per(5)
 		@count = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).count
+		respond_to do |format|
+			format.html
+			format.xls #{ render text: @movies.to_csv }
+		end
 	end
 
 	def new
@@ -37,7 +40,9 @@ class MoviesController < ApplicationController
 		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting])
 		@excel = Excel.new(@movies)
 		@excel.export_many
-
+		respond_to do |format|
+			format.html
+		end
 		redirect_to movies_url
 	end
 

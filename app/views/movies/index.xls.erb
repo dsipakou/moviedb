@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+    <% @movies.each do |movie| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= movie.disknum %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.orig_name %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.year %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.genre %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.director %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.produced %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.stars %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.actors %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.composer %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.lang %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.imdb %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.remarks %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.desc %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.imdb_link %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.kinopoisk_link %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.image_link %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.movie_tech_detail.duration %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.movie_tech_detail.filesize %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.movie_tech_detail.resolution %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.movie_tech_detail.filetype %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= movie.movie_tech_detail.screenshots %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

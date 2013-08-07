@@ -49,7 +49,7 @@
 					<table>
 						<tr>
 							<th>Режиссёр</th>
-							<td><% @movie.director.split(",").each do |director| %><%= link_to director.strip, movies_path(director: director.strip), class: "name" %><% end %></td>
+							<td><% @movie.director.split(",").each do |director| %><%= link_to director.strip, movies_path(director: director.strip), class: "name" %>&nbsp;&nbsp;<% end %></td>
 						</tr>
 						<tr>
 							<th>Звёзды</th>

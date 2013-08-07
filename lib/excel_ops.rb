@@ -40,7 +40,8 @@ class Excel
 		sheet[1,21] = @movie.movie_tech_detail.screenshots
 
 		row = sheet.row(1)
-		book.write "#{excel_file_name}.xls"
+		#book.write "#{excel_file_name}.xls"
+		send_data book
 	end
 
 	def export_many

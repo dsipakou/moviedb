@@ -4,14 +4,14 @@ require 'open-uri'
 class IMDB
 
 	POSTER_XPATH			= "//div[@class='image']/a[contains(@href, 'media')]/img[@itemprop='image']"
-	DIRECTOR_XPATH			= "//a[text()='Directed by']/../../../..//a[contains(@href, 'name')]"
+	DIRECTOR_XPATH			= "//h4[contains(text(), 'Directed by')]/following::table[1]//a[contains(@href, 'name')]"
 	DIRECTOR_SERIES_XPATH	= "//a[text()='Series Directed by']/../../../..//a[contains(@href, 'name')]"
 	STARS_XPATH				= "//div[@itemprop='actors']/a/span[@class='itemprop']"
 	ACTORS_XPATH			= "//table[@class='cast_list']//td[@itemprop='actor']/a[contains(@href, 'name')]/span[@itemprop='name']"
 	ACTORS_SERIES_XPATH		= "//table[@class='cast']//td[@class='nm']/a[contains(@href, 'name')]"
-	PRODUCER_XPATH			= "//a[text()='Produced by']/../../../..//a[contains(@href, 'name')]"
+	PRODUCER_XPATH			= "//h4[contains(text(), 'Produced by')]/following::table[1]//a[contains(@href, 'name')]"
 	PRODUCER_SERIES_XPATH	= "//a[text()='Series Produced by']/../../../..//a[contains(@href, 'name')]"
-	COMPOSER_XPATH			= "//a[text()='Original Music by']/../../../..//a[contains(@href, 'name')]"
+	COMPOSER_XPATH			= "//h4[contains(text(), 'Music by')]/following::table[1]//a[contains(@href, 'name')]"
 	COMPOSER_SERIES_XPATH	= "//a[text()='Series Original Music by']/../../../..//a[contains(@href, 'name')]"
 	GENRE_XPATH				= "//div[@itemprop='genre']/a"
 	GENRE_ALT_XPATH			= "//a[contains(@href, 'genre')]/span[@itemprop='genre']"
@@ -47,7 +47,7 @@ class IMDB
 	def get_items(page, xpath)
 		items = Array.new
 		page.xpath(xpath).each do |item|
-			items << item
+			items << item.text().squish
 		end
 		items.empty? ? nil : items.join(", ").squish
 	end

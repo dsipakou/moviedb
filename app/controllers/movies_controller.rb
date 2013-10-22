@@ -5,17 +5,19 @@ require 'file_ops'
 require 'kaminari'
 
 class MoviesController < ApplicationController
-
 	def index
 		set_filter
 		clear_filter
 		sorting
-		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).page(params[:page]).per(5)
+		@movies = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).page(params[:page]).per(15)
 		@count = Movie.filtering(session[:disknum], session[:search], session[:actor], session[:director], session[:year_from], session[:year_to], session[:imdb_from], session[:imdb_to], session[:genre_inc], session[:genre_exc], session[:sorting]).count
 		respond_to do |format|
 			format.html
-			format.xls #{ render text: @movies.to_csv }
+			format.xls
 		end
+#		respond_with(Movie.all) do |format|
+#			format.xls
+#		end
 	end
 
 	def new

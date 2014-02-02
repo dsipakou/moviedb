@@ -40,7 +40,7 @@ gem 'jquery-rails'
 
 gem 'mysql2'
 
-gem 'debugger'
+#gem 'debugger'
 
 gem 'nokogiri'
 

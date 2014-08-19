@@ -174,22 +174,21 @@ class MoviesController < ApplicationController
 
 	def clear_filter
 		case params[:clear_filter]
-		when "director"
-			session[:director] = nil
-		when "actor"
-			session[:actor] = nil
-		when "search"
-			session[:search] = nil
-		when "years"
-			session[:year_from] = nil
-			session[:year_to] = nil
-		when "disknum"
-			session[:disknum] = nil
-		when "imdb"
-			session[:imdb_from] = nil
-			session[:imdb_to] = nil
+			when "director"
+				session[:director] = nil
+			when "actor"
+				session[:actor] = nil
+			when "search"
+				session[:search] = nil
+			when "years"
+				session[:year_from] = nil
+				session[:year_to] = nil
+			when "disknum"
+				session[:disknum] = nil
+			when "imdb"
+				session[:imdb_from] = nil
+				session[:imdb_to] = nil
 		end
-		redirect_to movies_url if params[:clear_filter]
 	end
 
 	def sorting

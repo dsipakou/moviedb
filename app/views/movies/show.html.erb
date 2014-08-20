@@ -2,6 +2,15 @@
 	$(function() {
 		$("#tabs").tabs();
 	});
+<<<<<<< HEAD
+=======
+	$(document).ready(function() {
+		$("#test_but").click(function(event) {
+			alertify.alert("Хуй!!!!!");
+		});
+	});
+
+>>>>>>> d9a53456ec000937389eacf61a95913ebebcb757
 </script>
 <div id="wide_content">
 	<div class="table_header">
@@ -12,6 +21,10 @@
 		<div class="OTC CUC LTC"><%= link_to 'Удалить', @movie, method: :delete, data: { confirm: 'Ололошки, точно удалить?' }, :class => "PTC AUC" %><div class="ITC"></div></div>
 
 		<div class="OTC CUC LTC"><%= link_to "Экспорт в Excel", "/export/#{@movie.id}", class: "PTC AUC", id: "export_but" %><div class="ITC"></div></div>
+<<<<<<< HEAD
+=======
+		<div class="OTC CUC LTC"><a href="#" id="test_but" data-confirm="">Test</a><div class="ITC"></div></div>
+>>>>>>> d9a53456ec000937389eacf61a95913ebebcb757
 	</div>
 	<div class="table_content_in">
 		<table width="100%" class="summary">

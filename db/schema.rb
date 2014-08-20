@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(:version => 20130218160623) do
     t.string   "disknum"
     t.string   "name"
     t.string   "orig_name"
-    t.integer  "year",           :limit => 2
+    t.string   "year"
     t.string   "genre"
     t.string   "director"
     t.string   "produced"
@@ -45,14 +45,13 @@ ActiveRecord::Schema.define(:version => 20130218160623) do
     t.string   "lang"
     t.string   "imdb"
     t.string   "remarks"
-    t.text     "desc"
+    t.string   "desc"
     t.string   "imdb_link"
-    t.string   "kinopoisk_link"
     t.string   "image_link"
     t.string   "imdbhtml1"
     t.string   "imdbhtml2"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tests", :force => true do |t|

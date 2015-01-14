@@ -36,11 +36,7 @@ GEM
     coffee-script (2.2.0)
       coffee-script-source
       execjs
-<<<<<<< HEAD
-    coffee-script-source (1.4.0)
-=======
     coffee-script-source (1.6.3)
->>>>>>> d9a53456ec000937389eacf61a95913ebebcb757
     erubis (2.7.0)
     execjs (2.0.2)
     hike (1.2.3)

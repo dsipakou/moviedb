@@ -41,11 +41,6 @@ gem 'jquery-rails'
 
 gem 'mysql2'
 
-<<<<<<< HEAD
-=======
-#gem 'debugger'
-
->>>>>>> d9a53456ec000937389eacf61a95913ebebcb757
 gem 'nokogiri'
 
 gem 'kaminari'
